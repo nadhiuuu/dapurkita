@@ -37,7 +37,7 @@
 
                 <div class="hidden md:flex items-center gap-4">
                     <a href="/login" class="text-sm font-bold text-slate-700 hover:text-orange-500 transition-colors">Masuk</a>
-                    <a href="/register" class="px-5 py-2.5 text-sm font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-md transition-all">Daftar</a>
+                    <a href="/registrasi" class="px-5 py-2.5 text-sm font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-md transition-all">Daftar</a>
                 </div>
 
                 <button id="mobile-btn" class="lg:hidden p-2 text-slate-700">
@@ -59,10 +59,7 @@
         </div>
     </nav>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        lucide.createIcons();
-
         const btn = document.getElementById('mobile-btn');
         const menu = document.getElementById('mobile-menu');
 

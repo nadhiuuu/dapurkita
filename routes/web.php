@@ -13,3 +13,11 @@ Route::get('/resep', function () {
 Route::get('tips-artikel', function () {
     return view('pages.home.pages.tips-artikel'); 
 });
+
+Route::get('/login', function () {
+    return view('pages.auth.login');
+});
+
+Route::get('registrasi', function () {
+    return view('pages.auth.registrasi');
+});

@@ -9,10 +9,9 @@
 </head>
 
 <body>
-    @include('layouts.home.navbar')
     @yield('content')
-    @include('layouts.home.footer')
 
+    
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
