@@ -8,7 +8,7 @@
                 Coba berbagai resep favorit pilihan komunitas yang lezat dan mudah dibuat di rumah.
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <x-resep-card />
+                <x-recipes-card />
             </div>
 
             <div class="pt-10 text-center">

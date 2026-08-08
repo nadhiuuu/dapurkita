@@ -1,5 +1,5 @@
 @extends('layouts.auth.app')
-@section('title', 'Login')
+@section('title', 'Registrasi')
 @section('content')
 
 <main class="min-h-screen pt-28 pb-16 bg-slate-50 flex items-center justify-center px-4">

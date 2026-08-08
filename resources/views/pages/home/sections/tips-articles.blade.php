@@ -14,7 +14,7 @@
             <x-headline-card />
 
             <div class="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                <x-artikel-card />
+                <x-articless-card />
 
                 <div class="flex justify-end pt-2">
                     <a href="/artikel"

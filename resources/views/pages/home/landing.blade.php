@@ -3,6 +3,6 @@
 @section('content')
 
 @include('pages.home.sections.hero')
-@include('pages.home.sections.resep')
-@include('pages.home.sections.tips-artikel')
+@include('pages.home.sections.recipes')
+@include('pages.home.sections.tips-articles')
 @endsection
