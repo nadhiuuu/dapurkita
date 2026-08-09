@@ -9,6 +9,12 @@
         <p class="text-sm text-slate-500">Buat pengguna baru untuk mengakses platform</p>
     </div>
 </div>
-<x-create-users-form />
+
+<x-users-form
+    :action="route('admin.users.store')"
+    method="POST"
+    :user="null"
+    :cancelRoute="route('admin.users.index')"
+/>
 
 @endsection

@@ -10,6 +10,11 @@
     </div>
 </div>
 
-<x-edit-users-form />
+<x-users-form
+    :action="route('admin.users.update', $user)"
+    method="PUT"
+    :user="$user"
+    :cancelRoute="route('admin.users.index')"
+/>
 
 @endsection

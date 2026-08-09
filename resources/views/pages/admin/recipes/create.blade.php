@@ -9,5 +9,13 @@
         <p class="text-sm text-slate-500">Buat dan publikasikan resep masakan baru</p>
     </div>
 </div>
-<x-create-recipes-form />
+
+<x-recipe-form
+    :action="route('admin.recipes.store')"
+    method="POST"
+    :recipe="null"
+    :categories="$categories"
+    :cancelRoute="route('admin.recipes.index')"
+/>
+
 @endsection

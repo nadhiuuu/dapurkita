@@ -10,6 +10,11 @@
     </div>
 </div>
 
-<x-edit-recipe-categories-form />
+<x-category-form
+    :action="route('admin.recipe-categories.update', $recipeCategory)"
+    method="PUT"
+    :category="$recipeCategory"
+    :cancelRoute="route('admin.recipe-categories.index')"
+/>
 
 @endsection

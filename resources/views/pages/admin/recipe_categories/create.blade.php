@@ -10,6 +10,11 @@
     </div>
 </div>
 
-<x-create-recipe-categories-form />
+<x-category-form
+    :action="route('admin.recipe-categories.store')"
+    method="POST"
+    :category="null"
+    :cancelRoute="route('admin.recipe-categories.index')"
+/>
 
 @endsection

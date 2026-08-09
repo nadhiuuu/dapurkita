@@ -9,5 +9,13 @@
         <p class="text-sm text-slate-500">Perbarui data resep masakan</p>
     </div>
 </div>
-<x-edit-recipes />
+
+<x-recipe-form
+    :action="route('user.recipes.update', $recipe)"
+    method="PUT"
+    :recipe="$recipe"
+    :categories="$categories"
+    :cancelRoute="route('user.recipes.index')"
+/>
+
 @endsection

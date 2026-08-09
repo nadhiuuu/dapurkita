@@ -1,23 +1,29 @@
-@include('layouts.home.navbar')
-<main class="pt-24">
-    <section class="py-12 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="mb-8">
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="w-3 h-3 rounded-full bg-orange-500 inline-block"></span>
-                    <span class="text-sm font-bold text-orange-600 uppercase tracking-wider">Berita & Edukasi
-                        Kuliner</span>
-                </div>
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-800">Tips & Artikel Terbaru</h2>
-                <p class="text-slate-500 text-sm mt-1">Panduan memasak, trik dapur, dan info gizi terpercaya.</p>
-            </div>
+@extends('layouts.home.app')
+@section('title', 'Tips & Artikel')
+@section('content')
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <x-headline-card />
-                <div class="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                    <x-artikel-card />
+<section class="pt-32 pb-16 bg-gradient-to-b from-emerald-50 to-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <x-section-title
+            title="Tips & Artikel"
+            subtitle="Tips dapur, teknik memasak, dan artikel menarik untuk menemani aktivitas memasak Anda."
+        />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @forelse ($tipsArticles as $article)
+                <x-article-card :article="$article" />
+            @empty
+                <div class="col-span-full text-center py-16 text-slate-400">
+                    <i data-lucide="newspaper" class="w-12 h-12 mx-auto mb-4 text-slate-300"></i>
+                    <p class="font-semibold">Belum ada artikel untuk ditampilkan.</p>
                 </div>
-            </div>
+            @endforelse
         </div>
-    </section>
-</main>
+
+        <div class="mt-12">
+            {{ $tipsArticles->links() }}
+        </div>
+    </div>
+</section>
+
+@endsection

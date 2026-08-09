@@ -1,30 +1,27 @@
-<section class="py-12 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4">
+<section class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-emerald-50/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <x-section-title
+            title="Tips & Artikel"
+            subtitle="Trik dapur, teknik memasak, dan artikel menarik untuk menemani aktivitas memasak Anda."
+        />
 
-        <div class="mb-8">
-            <div class="flex items-center gap-2 mb-1">
-                <span class="w-3 h-3 rounded-full bg-orange-500 inline-block"></span>
-                <span class="text-sm font-bold text-orange-600 uppercase tracking-wider">Berita & Edukasi Kuliner</span>
-            </div>
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-800">Tips & Artikel Terbaru</h2>
-            <p class="text-slate-500 text-sm mt-1">Panduan memasak, trik dapur, dan info gizi terpercaya.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @forelse ($latestArticles as $article)
+                <x-article-card :article="$article" />
+            @empty
+                <div class="col-span-full text-center py-16 text-slate-400">
+                    <i data-lucide="newspaper" class="w-12 h-12 mx-auto mb-4 text-slate-300"></i>
+                    <p class="font-semibold">Belum ada artikel untuk ditampilkan.</p>
+                </div>
+            @endforelse
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <x-headline-card />
-
-            <div class="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                <x-articless-card />
-
-                <div class="flex justify-end pt-2">
-                    <a href="/artikel"
-                        class="inline-block px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all">
-                        Lihat Artikel & Tips Lainnya</i>
-                    </a>
-                </div>
-
-            </div>
-
+        <div class="mt-10 text-center">
+            <a href="{{ route('home.articles') }}"
+                class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-sm transition-all">
+                Baca Semua Artikel
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
         </div>
     </div>
 </section>

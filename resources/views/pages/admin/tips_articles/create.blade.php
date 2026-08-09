@@ -9,5 +9,13 @@
         <p class="text-sm text-slate-500">Buat dan publikasikan tips atau artikel terbaru</p>
     </div>
 </div>
-<x-create-tips-articles-form />
+
+<x-tips-articles-form
+    :action="route('admin.tips-articles.store')"
+    method="POST"
+    :tipsArticle="null"
+    :categories="$categories"
+    :cancelRoute="route('admin.tips-articles.index')"
+/>
+
 @endsection

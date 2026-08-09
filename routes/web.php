@@ -1,103 +1,60 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\RecipeCategoryController;
+use App\Http\Controllers\Admin\RecipeController;
+use App\Http\Controllers\Admin\TipsArticleCategoryController;
+use App\Http\Controllers\Admin\TipsArticleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Home\PageController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\RecipeController as UserRecipeController;
+use App\Http\Controllers\User\TipsArticleController as UserTipsArticleController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home.landing');
-});
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login.process');
+Route::get('/registrasi', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'store'])->name('register.process');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/resep', function () {
-    return view('pages.home.pages.recipes');
-});
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-Route::get('tips-artikel', function () {
-    return view('pages.home.pages.tips-articles');
-});
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('users', UserController::class);
+        Route::resource('recipe-categories', RecipeCategoryController::class);
+        Route::resource('tips-articles-categories', TipsArticleCategoryController::class)
+            ->parameters(['tips-articles-categories' => 'tipsArticleCategory']);
+        Route::resource('recipes', RecipeController::class);
+        Route::patch('recipes/{recipe}/status', [RecipeController::class, 'toggleStatus'])
+            ->name('recipes.status');
 
-Route::get('/login', function () {
-    return view('pages.auth.login');
-});
-
-Route::get('registrasi', function () {
-    return view('pages.auth.registrasi');
-});
-
-Route::redirect('/admin', '/admin/dashboard');
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.admin.dashboard');
-    })->name('admin.dashboard');
-    Route::get('/users', function () {
-        return view('pages.admin.users.index');
-    })->name('admin.users');
-    Route::get('/users/create', function () {
-        return view('pages.admin.users.create');
-    });
-    Route::get('/users/edit', function () {
-        return view('pages.admin.users.edit');
-    });
-    Route::get('/resep', function () {
-        return view('pages.admin.recipes.index');
-    });
-    Route::get('/resep/create', function () {
-        return view('pages.admin.recipes.create');
-    });
-    Route::get('/resep/edit', function () {
-        return view('pages.admin.recipes.edit');
-    });
-    Route::get('/tips-articles', function () {
-        return view('pages.admin.tips_articles.index');
-    });
-    Route::get('/tips-articles/create', function () {
-        return view('pages.admin.tips_articles.create');
-    });
-    Route::get('/tips-articles/edit', function () {
-        return view('pages.admin.tips_articles.edit');
-    });
-    Route::get('/recipe-categories', function () {
-        return view('pages.admin.recipe_categories.index');
-    });
-    Route::get('/recipe-categories/create', function () {
-        return view('pages.admin.recipe_categories.create');
-    });
-    Route::get('/recipe-categories/edit', function () {
-        return view('pages.admin.recipe_categories.edit');
-    });
-    Route::get('/tips-articles-categories', function () {
-        return view('pages.admin.tips_articles_categories.index');
-    });
-    Route::get('/tips-articles-categories/create', function () {
-        return view('pages.admin.tips_articles_categories.create');
-    });
-    Route::get('/tips-articles-categories/edit', function () {
-        return view('pages.admin.tips_articles_categories.edit');
+        Route::resource('tips-articles', TipsArticleController::class)
+            ->parameters(['tips-articles' => 'tipsArticle']);
+        Route::patch('tips-articles/{tipsArticle}/status', [TipsArticleController::class, 'toggleStatus'])
+            ->name('tips-articles.status');
     });
 
-});
+Route::middleware(['auth', 'role:user'])
+    ->prefix('user')
+    ->name('user.')
+    ->group(function () {
+        Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
+        Route::resource('recipes', UserRecipeController::class);
+
+        Route::resource('tips-articles', UserTipsArticleController::class)
+            ->parameters(['tips-articles' => 'tipsArticle']);
+    });
+
+
+Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/resep', [PageController::class, 'recipes'])->name('home.recipes');
+Route::get('tips-artikel', [PageController::class, 'articles'])->name('home.articles');
+Route::get('/resep/{recipe}', [PageController::class, 'recipeDetail'])->name('home.recipe-detail');
+Route::get('/tips-artikel/{tipsArticle:slug}', [PageController::class, 'articleDetail'])->name('home.article-detail');
 Route::redirect('/user', '/user/dashboard');
-Route::prefix('user')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.user.dashboard');
-    })->name('user.dashboard');
-
-    Route::get('/resep', function () {
-        return view('pages.user.recipes.index');
-    });
-    Route::get('/resep/create', function () {
-        return view('pages.user.recipes.create');
-    });
-    Route::get('/resep/edit', function () {
-        return view('pages.user.recipes.edit');
-    });
-
-    Route::get('/tips-articles', function () {
-        return view('pages.user.tips_articles.index');
-    });
-    Route::get('/tips-articles', function () {
-        return view('pages.user.tips_articles.create');
-    });
-    Route::get('/tips-articles', function () {
-        return view('pages.user.tips_articles.edit');
-    });
-});

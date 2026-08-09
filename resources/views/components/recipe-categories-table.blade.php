@@ -1,7 +1,20 @@
+@props([
+    'recipeCategories',
+])
+
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-4">
-    <form action="" method="GET" class="max-w-md">
-        <input type="text" name="search" placeholder="Cari nama kategori..." 
-            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-colors">
+    <form action="{{ route('admin.recipe-categories.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kategori..."
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-colors">
+        </div>
+
+        <div>
+            <button type="submit"
+                class="w-full px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm rounded-lg transition-colors">
+                Filter
+            </button>
+        </div>
     </form>
 </div>
 
@@ -18,55 +31,43 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
-                
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="py-3 px-4 text-slate-500">1</td>
-                    <td class="py-3 px-4 font-medium text-slate-800">Masakan Utama</td>
-                    <td class="py-3 px-4 text-slate-500">masakan-utama</td>
-                    <td class="py-3 px-4">
-                        <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full">42 Resep</span>
-                    </td>
-                    <td class="py-3 px-4">
-                        <div class="flex items-center justify-center gap-2">
-                            <a href="/admin/recipe-categories/1/edit" class="p-1.5 text-slate-500 hover:text-orange-500 rounded hover:bg-orange-50 transition-colors">
-                                <i data-lucide="edit" class="w-4 h-4"></i>
-                            </a>
-                            <button class="p-1.5 text-slate-500 hover:text-red-500 rounded hover:bg-red-50 transition-colors">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                @forelse ($recipeCategories as $category)
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-3 px-4 text-slate-500">{{ $loop->iteration }}</td>
+                        <td class="py-3 px-4 font-medium text-slate-800">{{ $category->name }}</td>
+                        <td class="py-3 px-4 text-slate-500">{{ $category->slug }}</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-md">{{ $category->recipes_count }} Resep</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('admin.recipe-categories.edit', $category) }}"
+                                    class="p-1.5 text-slate-500 hover:text-orange-500 rounded hover:bg-orange-50 transition-colors">
+                                    <i data-lucide="edit" class="w-4 h-4"></i>
+                                </a>
 
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="py-3 px-4 text-slate-500">2</td>
-                    <td class="py-3 px-4 font-medium text-slate-800">Minuman</td>
-                    <td class="py-3 px-4 text-slate-500">minuman</td>
-                    <td class="py-3 px-4">
-                        <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full">18 Resep</span>
-                    </td>
-                    <td class="py-3 px-4">
-                        <div class="flex items-center justify-center gap-2">
-                            <a href="/admin/recipe-categories/2/edit" class="p-1.5 text-slate-500 hover:text-orange-500 rounded hover:bg-orange-50 transition-colors">
-                                <i data-lucide="edit" class="w-4 h-4"></i>
-                            </a>
-                            <button class="p-1.5 text-slate-500 hover:text-red-500 rounded hover:bg-red-50 transition-colors">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                                <form action="{{ route('admin.recipe-categories.destroy', $category) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus kategori ini?');">
+                                    @csrf
+                                    @method('DELETE')
 
+                                    <button
+                                        type="submit"
+                                        class="p-1.5 text-slate-500 hover:text-red-500 rounded hover:bg-red-50 transition-colors">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="py-6 text-center text-slate-400">Belum ada kategori.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 
-    <div class="p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
-        <span class="text-slate-500 text-xs sm:text-sm">Menampilkan 1 - 2 dari 2 data</span>
-        <div class="flex items-center gap-1">
-            <button class="px-3 py-1.5 border border-slate-200 text-slate-500 rounded-md disabled:opacity-50" disabled>Sebelumnya</button>
-            <button class="px-3 py-1.5 bg-orange-500 text-white rounded-md font-medium">1</button>
-            <button class="px-3 py-1.5 border border-slate-200 text-slate-500 rounded-md disabled:opacity-50" disabled>Selanjutnya</button>
-        </div>
-    </div>
+    <x-pagination :paginator="$recipeCategories" />
 </div>

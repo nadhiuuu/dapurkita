@@ -1,35 +1,29 @@
-@include('layouts.home.navbar')
+@extends('layouts.home.app')
+@section('title', 'Resep Masakan')
+@section('content')
 
-<main class="pt-24">
-    <section class="pb-16 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-2 text-slate-800">
-                Resep Populer
-            </h2>
-            <p class="text-center text-slate-500 mb-6 mx-auto">
-                Coba berbagai resep favorit pilihan komunitas yang lezat dan mudah dibuat di rumah.
-            </p>
+<section class="pt-32 pb-16 bg-gradient-to-b from-orange-50 to-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <x-section-title
+            title="Semua Resep"
+            subtitle="Jelajahi berbagai resep masakan dari komunitas DapurKita."
+        />
 
-            <div class="max-w-md mx-auto mb-10">
-                <form action="/resep" method="GET" class="relative flex items-center">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari resep masakan..."
-                        class="w-full pl-11 pr-24 py-3 bg-white border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 shadow-sm transition-all">
-                    <div class="absolute left-4 text-slate-400 pointer-events-none">
-                        <i data-lucide="search" class="w-4 h-4"></i>
-                    </div>
-                    <button type="submit"
-                        class="absolute right-2 px-4 py-1 bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold rounded-lg transition-colors shadow-sm">
-                        Cari
-                    </button>
-                </form>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <x-resep-card />
-            </div>
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @forelse ($recipes as $recipe)
+                <x-recipe-card :recipe="$recipe" />
+            @empty
+                <div class="col-span-full text-center py-16 text-slate-400">
+                    <i data-lucide="cooking-pot" class="w-12 h-12 mx-auto mb-4 text-slate-300"></i>
+                    <p class="font-semibold">Belum ada resep untuk ditampilkan.</p>
+                </div>
+            @endforelse
         </div>
-    </section>
-</main>
 
-@include('layouts.home.footer')
+        <div class="mt-12">
+            {{ $recipes->links() }}
+        </div>
+    </div>
+</section>
+
+@endsection

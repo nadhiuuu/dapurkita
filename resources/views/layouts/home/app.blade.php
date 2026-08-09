@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang={{ str_replace('_', '-', app()->getLocale()) }}>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 
 <head>
     <meta charset='utf-8'>
@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="antialiased bg-slate-50 text-slate-900">
     @include('layouts.home.navbar')
     @yield('content')
     @include('layouts.home.footer')
