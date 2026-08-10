@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TipsArticleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Home\PageController;
+use App\Http\Controllers\MealDB\RecipeController as MealDBRecipeController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\RecipeController as UserRecipeController;
 use App\Http\Controllers\User\TipsArticleController as UserTipsArticleController;
@@ -30,6 +31,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('tips-articles-categories', TipsArticleCategoryController::class)
             ->parameters(['tips-articles-categories' => 'tipsArticleCategory']);
         Route::resource('recipes', RecipeController::class);
+        Route::get('recipes/mealdb/{meal}/import', [RecipeController::class, 'import'])
+            ->name('recipes.import');
         Route::patch('recipes/{recipe}/status', [RecipeController::class, 'toggleStatus'])
             ->name('recipes.status');
 
@@ -44,9 +47,7 @@ Route::middleware(['auth', 'role:user'])
     ->name('user.')
     ->group(function () {
         Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-
         Route::resource('recipes', UserRecipeController::class);
-
         Route::resource('tips-articles', UserTipsArticleController::class)
             ->parameters(['tips-articles' => 'tipsArticle']);
     });
@@ -54,6 +55,7 @@ Route::middleware(['auth', 'role:user'])
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/resep', [PageController::class, 'recipes'])->name('home.recipes');
+Route::get('/resep/mealdb/{meal}', [MealDBRecipeController::class, 'show'])->name('home.recipe-mealdb');
 Route::get('tips-artikel', [PageController::class, 'articles'])->name('home.articles');
 Route::get('/resep/{recipe}', [PageController::class, 'recipeDetail'])->name('home.recipe-detail');
 Route::get('/tips-artikel/{tipsArticle:slug}', [PageController::class, 'articleDetail'])->name('home.article-detail');

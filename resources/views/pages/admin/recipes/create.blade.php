@@ -10,11 +10,15 @@
     </div>
 </div>
 
+<x-alert-success />
+<x-alert-error />
+
 <x-recipe-form
     :action="route('admin.recipes.store')"
     method="POST"
     :recipe="null"
     :categories="$categories"
+    :import="$import ?? null"
     :cancelRoute="route('admin.recipes.index')"
 />
 

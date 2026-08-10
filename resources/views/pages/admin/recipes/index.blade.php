@@ -16,6 +16,7 @@
 </div>
 
 <x-alert-success />
+<x-alert-error />
 
 <x-recipes-admin-table :recipes="$recipes" :categories="$categories" />
 

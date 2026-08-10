@@ -1,4 +1,4 @@
-@props(['recipe'])
+@props(['recipe', 'showSourceBadge' => false])
 
 <a href="{{ route('home.recipe-detail', $recipe) }}"
     class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
@@ -15,6 +15,12 @@
         @if ($recipe->category)
             <span class="absolute top-3 left-3 px-3 py-1 text-xs font-semibold text-white bg-orange-500/90 rounded-full backdrop-blur">
                 {{ $recipe->category->name }}
+            </span>
+        @endif
+
+        @if ($showSourceBadge)
+            <span class="absolute top-3 right-3 px-2.5 py-1 text-xs font-semibold text-emerald-800 bg-emerald-100/95 rounded-full backdrop-blur">
+                DapurKita
             </span>
         @endif
     </div>

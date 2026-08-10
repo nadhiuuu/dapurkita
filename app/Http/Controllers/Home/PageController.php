@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Recipe;
 use App\Models\TipsArticle;
+use App\Services\MealDBService;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -40,16 +42,37 @@ class PageController extends Controller
 
     /**
      * Recipe listing page.
+     *
+     * Pencarian bersifat hybrid: hasil dari database DapurKita
+     * dipadukan dengan referensi dari TheMealDB di halaman yang sama.
      */
-    public function recipes()
+    public function recipes(Request $request, MealDBService $mealdb)
     {
+        $search = trim((string) $request->query('search', ''));
+
         $recipes = Recipe::with(['category', 'user'])
             ->where('status', 'publish')
+            ->when($search !== '', fn ($query) => $query->where('title', 'like', '%'.$search.'%'))
             ->latest()
             ->paginate(12)
             ->withQueryString();
 
-        return view('pages.home.pages.recipes', compact('recipes'));
+        $mealDbRecipes = [];
+        $mealDbError = null;
+
+        if ($search !== '') {
+            $result = $mealdb->search($search);
+
+            $mealDbRecipes = $result['recipes'];
+            $mealDbError = $result['error'];
+        }
+
+        return view('pages.home.pages.recipes', compact(
+            'recipes',
+            'mealDbRecipes',
+            'mealDbError',
+            'search',
+        ));
     }
 
     /**

@@ -5,7 +5,15 @@
     'categories' => [],
     'showStatus' => false,
     'cancelRoute' => null,
+    'import' => null,
 ])
+
+@php
+    $import = is_array($import) ? $import : null;
+    $importImageUrl = old('image_url', $import['image_url'] ?? '');
+    $previewSrc = $recipe?->image ? Storage::url($recipe->image) : $importImageUrl;
+    $showPreview = (bool) ($recipe?->image || $importImageUrl);
+@endphp
 
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
     <form action="{{ $action }}" method="POST" enctype="multipart/form-data" class="space-y-4">
@@ -17,7 +25,7 @@
 
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1">Judul Resep</label>
-            <input type="text" name="title" value="{{ old('title', $recipe?->title) }}" placeholder="Contoh: Soto Ayam Santan"
+            <input type="text" name="title" value="{{ old('title', $recipe?->title ?? $import['title'] ?? '') }}" placeholder="Contoh: Soto Ayam Santan"
                 class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">
 
             @error('title')
@@ -28,7 +36,7 @@
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1">Deskripsi</label>
             <textarea name="description" rows="3" placeholder="Deskripsi singkat resep (opsional)"
-                class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">{{ old('description', $recipe?->description) }}</textarea>
+                class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">{{ old('description', $recipe?->description ?? $import['description'] ?? '') }}</textarea>
 
             @error('description')
                 <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
@@ -79,10 +87,18 @@
                 <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
             @enderror
 
+            @if ($importImageUrl)
+                <input type="hidden" name="image_url" value="{{ $importImageUrl }}">
+                <p class="text-xs text-blue-600 mt-2 flex items-center gap-1.5">
+                    <i data-lucide="link" class="w-3.5 h-3.5"></i>
+                    Gambar otomatis diambil dari TheMealDB saat disimpan, atau unggah gambar sendiri.
+                </p>
+            @endif
+
             <div class="mt-2">
                 <img id="recipe-img-preview"
-                    src="{{ $recipe?->image ? Storage::url($recipe->image) : '' }}"
-                    class="{{ $recipe?->image ? '' : 'hidden' }} w-32 h-32 object-cover rounded-lg border border-slate-200"
+                    src="{{ $previewSrc }}"
+                    class="{{ $showPreview ? '' : 'hidden' }} w-32 h-32 object-cover rounded-lg border border-slate-200"
                     alt="Gambar Resep">
             </div>
         </div>
@@ -92,7 +108,7 @@
                 <label class="block text-sm font-semibold text-slate-700 mb-1">Bahan-bahan</label>
                 <textarea name="ingredients" rows="8"
                     placeholder="Contoh:&#10;- 500g daging ayam&#10;- 2 buah tomat&#10;- 1/2 paprika hijau"
-                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">{{ old('ingredients', $recipe?->ingredients) }}</textarea>
+                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">{{ old('ingredients', $recipe?->ingredients ?? $import['ingredients'] ?? '') }}</textarea>
 
                 @error('ingredients')
                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
@@ -103,7 +119,7 @@
                 <label class="block text-sm font-semibold text-slate-700 mb-1">Cara Membuat</label>
                 <textarea name="steps" rows="8"
                     placeholder="Contoh:&#10;1. Potong ayam menjadi beberapa bagian.&#10;2. Tumis bumbu hingga harum."
-                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">{{ old('steps', $recipe?->steps) }}</textarea>
+                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-orange-500 transition-all">{{ old('steps', $recipe?->steps ?? $import['steps'] ?? '') }}</textarea>
 
                 @error('steps')
                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>

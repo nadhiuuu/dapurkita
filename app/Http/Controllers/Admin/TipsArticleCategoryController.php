@@ -14,7 +14,7 @@ class TipsArticleCategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $query = TipsArticleCategory::query();
+        $query = TipsArticleCategory::withCount('tipsArticles');
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
