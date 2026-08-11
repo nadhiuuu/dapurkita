@@ -26,5 +26,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TipsArticleCategorySeeder::class,
         ]);
+
+        $this->call([
+            LandingPageSeeder::class,
+        ]);
     }
 }

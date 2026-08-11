@@ -133,9 +133,6 @@ class RecipeController extends Controller
             ->with('success', 'Resep berhasil diperbarui.');
     }
 
-    /**
-     * Publish / unpublish a recipe.
-     */
     public function toggleStatus(Recipe $recipe)
     {
         $recipe->update([

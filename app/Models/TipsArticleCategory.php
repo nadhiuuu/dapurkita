@@ -9,6 +9,11 @@ class TipsArticleCategory extends Model
 {
     protected $fillable = ['name', 'slug'];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function tipsArticles(): HasMany
     {
         return $this->hasMany(TipsArticle::class);

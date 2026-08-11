@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutSection;
+use App\Models\HeroSection;
 use App\Models\Recipe;
+use App\Models\RecipeCategory;
 use App\Models\TipsArticle;
+use App\Models\TipsArticleCategory;
+use App\Models\User;
 use App\Services\MealDBService;
 use Illuminate\Http\Request;
 
@@ -29,7 +34,10 @@ class PageController extends Controller
 
         $recipeCount = Recipe::where('status', 'publish')->count();
         $articleCount = TipsArticle::where('status', 'publish')->count();
-        $userCount = \App\Models\User::count();
+        $userCount = User::count();
+
+        $hero = HeroSection::setting();
+        $about = AboutSection::setting()->load('advantages');
 
         return view('pages.home.landing', compact(
             'latestRecipes',
@@ -37,15 +45,11 @@ class PageController extends Controller
             'recipeCount',
             'articleCount',
             'userCount',
+            'hero',
+            'about',
         ));
     }
 
-    /**
-     * Recipe listing page.
-     *
-     * Pencarian bersifat hybrid: hasil dari database DapurKita
-     * dipadukan dengan referensi dari TheMealDB di halaman yang sama.
-     */
     public function recipes(Request $request, MealDBService $mealdb)
     {
         $search = trim((string) $request->query('search', ''));
@@ -76,6 +80,21 @@ class PageController extends Controller
     }
 
     /**
+     * Recipe listing page filtered by category.
+     */
+    public function recipesByCategory(RecipeCategory $recipeCategory)
+    {
+        $recipes = $recipeCategory->recipes()
+            ->with(['category', 'user'])
+            ->where('status', 'publish')
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.home.pages.recipes-category', compact('recipeCategory', 'recipes'));
+    }
+
+    /**
      * Tips & article listing page.
      */
     public function articles()
@@ -87,6 +106,21 @@ class PageController extends Controller
             ->withQueryString();
 
         return view('pages.home.pages.tips-articles', compact('tipsArticles'));
+    }
+
+    /**
+     * Tips & article listing page filtered by category.
+     */
+    public function tipsArticlesByCategory(TipsArticleCategory $tipsArticleCategory)
+    {
+        $tipsArticles = $tipsArticleCategory->tipsArticles()
+            ->with(['category', 'user'])
+            ->where('status', 'publish')
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.home.pages.tips-articles-category', compact('tipsArticleCategory', 'tipsArticles'));
     }
 
     /**

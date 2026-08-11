@@ -59,6 +59,13 @@
                 <span>Tips & Artikel</span>
             </a>
 
+            <a href="{{ route('admin.landing-page.hero') }}"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold
+                {{ request()->routeIs('admin.landing-page.*') ? 'bg-orange-500 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="layout-template" class="w-5 h-5"></i>
+                <span>Landing Page</span>
+            </a>
+
         </nav>
     </div>
 

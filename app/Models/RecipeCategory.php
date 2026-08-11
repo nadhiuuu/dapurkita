@@ -9,6 +9,11 @@ class RecipeCategory extends Model
 {
     protected $fillable = ['name', 'slug'];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function recipes(): HasMany
     {
         return $this->hasMany(Recipe::class);

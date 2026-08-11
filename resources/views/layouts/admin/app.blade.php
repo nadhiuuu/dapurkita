@@ -26,10 +26,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
-    </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
