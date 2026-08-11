@@ -1,7 +1,7 @@
 <section class="relative text-white overflow-hidden min-h-screen flex items-center">
     <div class="absolute inset-0">
         <img src="{{ asset('images/Background.jpg') }}"
-            class="w-full h-full object-cover" alt="Latar belakang dapur" />
+            class="w-full h-full object-cover" alt="background" />
         <div class="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-amber-950/90 via-amber-900/90 to-transparent"></div>
     </div>
     <div class="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-10 md:py-0">

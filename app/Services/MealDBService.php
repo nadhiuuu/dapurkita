@@ -21,13 +21,6 @@ class MealDBService
         $this->maxResults = (int) config('mealdb.max_results', 12);
     }
 
-    /**
-     * Mencari resep referensi dari TheMealDB.
-     *
-     * Mengembalikan array dengan key:
-     * - "recipes": daftar resep ternormalisasi (kosong jika tidak ada hasil)
-     * - "error": pesan kesalahan (null jika sukses)
-     */
     public function search(string $keyword): array
     {
         if (trim($keyword) === '') {
@@ -60,13 +53,6 @@ class MealDBService
         }
     }
 
-    /**
-     * Mengambil detail lengkap satu resep berdasarkan idMeal.
-     *
-     * Mengembalikan array dengan key:
-     * - "recipe": data resep ternormalisasi (null jika tidak ditemukan)
-     * - "error": pesan kesalahan (null jika sukses)
-     */
     public function lookup(string $mealId): array
     {
         try {
@@ -90,11 +76,6 @@ class MealDBService
         }
     }
 
-    /**
-     * Mengunduh gambar TheMealDB ke storage lokal.
-     *
-     * Mengembalikan path file (contoh: recipes/xxxx.jpg) atau null jika gagal.
-     */
     public function downloadImage(?string $url): ?string
     {
         if (! $url) {
@@ -127,11 +108,6 @@ class MealDBService
         }
     }
 
-    /**
-     * Mengubah record mentah dari API menjadi struktur yang mudah dipakai.
-     *
-     * strIngredientN dipasangkan dengan strMeasureN pada N yang sama.
-     */
     protected function normalize(array $meal): array
     {
         $ingredients = [];
