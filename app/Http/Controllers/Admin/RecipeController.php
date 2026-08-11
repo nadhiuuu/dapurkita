@@ -161,12 +161,7 @@ class RecipeController extends Controller
             ->with('success', 'Resep berhasil dihapus.');
     }
 
-    /**
-     * Mengambil data resep dari TheMealDB lalu mengisi form create.
-     *
-     * Tidak ada data yang disimpan ke database di sini. Admin tetap
-     * meninjau, mengedit, dan menekan "Simpan" sebelum resep masuk DB.
-     */
+
     public function import(string $mealId)
     {
         $result = $this->mealdb->lookup($mealId);

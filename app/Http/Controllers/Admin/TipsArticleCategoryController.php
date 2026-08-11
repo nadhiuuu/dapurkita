@@ -51,7 +51,7 @@ class TipsArticleCategoryController extends Controller
 
         return redirect()
             ->route('admin.tips-articles-categories.index')
-            ->with('Sukses', 'Kategori berhasil ditambahkan.');
+            ->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     /**
@@ -85,7 +85,7 @@ class TipsArticleCategoryController extends Controller
 
         return redirect()
             ->route('admin.tips-articles-categories.index')
-            ->with('Sukses', 'Kategori berhasil diperbarui.');
+            ->with('success', 'Kategori berhasil diperbarui.');
     }
 
     /**
@@ -95,6 +95,6 @@ class TipsArticleCategoryController extends Controller
     {
         $tipsArticleCategory->delete();
 
-        return back()->with('Sukses', 'Kategori berhasil dihapus!');
+        return back()->with('success', 'Kategori berhasil dihapus!');
     }
 }

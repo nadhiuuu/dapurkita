@@ -64,7 +64,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('admin.users.index')
-            ->with('Sukses', 'Pengguna berhasil ditambahkan.');
+            ->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -116,7 +116,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('admin.users.index')
-            ->with('Sukses', 'Data pengguna berhasil diperbarui.');
+            ->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
     /**
@@ -132,6 +132,6 @@ class UserController extends Controller
 
         return redirect()
             ->route('admin.users.index')
-            ->with('Sukses', 'Pengguna berhasil dihapus.');
+            ->with('success', 'Pengguna berhasil dihapus.');
     }
 }
