@@ -43,8 +43,8 @@
                     </span>
                 </div>
 
-                <div class="prose prose-lg prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-line">
-                    {{ $tipsArticle->content }}
+                <div class="article-content max-w-none text-slate-600 leading-relaxed">
+                    {!! $tipsArticle->content !!}
                 </div>
 
                 <div class="mt-10 text-center">

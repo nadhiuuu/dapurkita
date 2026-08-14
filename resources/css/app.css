@@ -7,3 +7,73 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.ck-editor__editable {
+    min-height: 240px;
+}
+
+.article-content > :first-child {
+    margin-top: 0;
+}
+
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 1.5rem 0 0.75rem;
+}
+
+.article-content h2 {
+    font-size: 1.5rem;
+}
+
+.article-content h3 {
+    font-size: 1.25rem;
+}
+
+.article-content h4 {
+    font-size: 1.125rem;
+}
+
+.article-content p {
+    margin: 0.9rem 0;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.article-content ul {
+    list-style: disc;
+}
+
+.article-content ol {
+    list-style: decimal;
+}
+
+.article-content li {
+    margin: 0.35rem 0;
+}
+
+.article-content blockquote {
+    border-left: 4px solid #10b981;
+    color: #475569;
+    font-style: italic;
+    margin: 1.25rem 0;
+    padding: 0.5rem 1rem;
+}
+
+.article-content a {
+    color: #059669;
+    text-decoration: underline;
+}
+
+.article-content hr {
+    border: 0;
+    border-top: 1px solid #cbd5e1;
+    margin: 1.5rem 0;
+}
