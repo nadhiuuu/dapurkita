@@ -12,11 +12,6 @@ class RecipeController extends Controller
     ) {
     }
 
-    /**
-     * Menampilkan detail resep dari TheMealDB.
-     *
-     * Data hanya ditampilkan dan tidak disimpan ke database.
-     */
     public function show(string $mealId)
     {
         $result = $this->mealdb->lookup($mealId);
